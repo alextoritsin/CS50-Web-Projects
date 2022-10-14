@@ -1,0 +1,152 @@
+{% extends "auctions/layout.html" %}
+
+{% load static %}
+{% block body %}
+    <div>
+        {% if user.is_authenticated %}
+        <h1 class="m-2">
+            <div class="d-flex mb-2">
+                <div>Listing: {{ listing.title }}</div>
+                <div class="ms-3">
+                    <!-- Favorite icon -->
+                    <form id="icon" action="{% url 'listing' listing.id %}" method="post">
+                        {% csrf_token %}
+                        <input type="hidden" name="favorite">
+                        <button class="btn">
+                            {% if check %}
+                                <i class="bi bi-bookmark-check-fill"></i>
+                            {% else %}
+                                <i class="bi bi-bookmark"></i>
+                            {% endif %}
+                        </button>
+                    </form>
+                </div>
+                <div class="ms-auto p-1 me-2">
+                    <!-- Close/make active button -->
+                    {% if user == listing.owner %}
+                        <form action="{% url 'listing' listing.id %}" method="post">
+                            {% csrf_token %}
+                            <input type="hidden" name="close">
+                            {% if listing.active %}
+                                <button type="submit" class="btn btn-warning btn-sm close">Close Listing</button>
+                            {% else %}
+                                <button type="submit" class="btn btn-info btn-sm close">Make Active</button>
+                            {% endif %}
+                        </form>
+                    {% endif %}
+                </div>
+            </div>
+        </h1>
+        <hr>
+        {% endif %}
+        
+    </div>
+    <div class="container-fluid">
+        <div class="row">
+            <!-- Listing image -->
+            <div class="col-auto justify-content-center">
+                <img class="listing mb-2" src="{{ listing.url }}" alt="listing">
+            </div>
+            <div class="col">
+                <!-- Details -->
+                <div class="desc mb-4">{{ listing.description }}</div>
+                Details:
+                <ul>
+                    <li>Listed by: <strong>{{ listing.owner }}</strong></li>
+                    <li>Category: {{ listing.category }}</li>
+                </ul>
+
+                {% if listing.active %}
+                    {% if bid %}
+                        <h3 class="mb-3">Current Bid: ${{ bid.amount }}</h3>
+                        <p><b>{{ count }}</b> bid(s) placed so far.</p> 
+                    {% else %}
+                        <h3 class="mb-3">Current Bid: ${{ listing.starting_bid }}</h3>
+                        <p>No bids placed.</p>
+                    {% endif %}
+                    {% if user.is_authenticated %}
+                            {% if not user == listing.owner %}
+                                <form action="{% url 'listing' listing.id %}" method="post">
+                                    {% csrf_token %}
+                                    <div class="form-group bid my-3">
+                                        {{ form.last_bid }}
+                                        {{ form.last_bid.errors }}
+                                    </div>
+                                    <button type="submit" class="btn btn-primary">Place Bid</button>
+                                </form>
+                            {% endif %}
+                    {% else %}
+                        <h6>Please, <a href="{% url 'login' %}">Log in</a>  to place a bid</h6>
+                    {% endif %}
+                {% else %}
+                    {% if bid %}
+                            <h3 class="mb-3">Last Bid: ${{ bid.amount }}</h3>
+                    {% else %}
+                        <h3 class="mb-3">Last Bid: ${{ listing.starting_bid }}</h3>
+                    {% endif %} 
+
+                    {% if user == bid.bidder %}
+                        <p class="fs-2 mt-2 text-success">Congratulations! You win this auction!</p>
+                    {% else %}
+                        {% if user == listing.owner %}
+                        <p class="fs-2 mt-2 text-secondary">You closed this listing.</p>
+                        {% else %}
+                            <p class="fs-2 mt-2 text-secondary">Sorry, this listing is closed.</p>
+                        {% endif %}
+                    {% endif %} 
+                {% endif %}
+
+            </div>
+        </div>
+    </div>
+    <hr>
+
+    <!-- Comments Header -->
+    <div class="container commentblock">
+        <div class="row justify-content-center align-items-center mb-3 header">
+            Comments
+        </div>
+        
+        <!-- Comment input -->
+        {% if user.is_authenticated %}
+            <div class="row mt-2">
+                <div class="col-auto">
+                    <img class="avatar my-1" src="{% static 'auctions/images/darth_placeholder.png' %}" alt="avatar"
+                    height="80px" width="80px">
+                </div>
+                <div class="col">
+                    <form action="{% url 'comment' listing.id %}" method="post" class="ms-2">
+                        {% csrf_token %}
+                        <textarea name="comment" class="comment-input form-control mb-3 mt-1" placeholder="Leave your comment" required></textarea>
+                        <div class="d-flex justify-content-end">
+                            <button class="btn btn-outline-primary btn-sm mb-2" type="submit">Comment</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        {% else %}
+            <h6 class="pb-3">
+                Please, <a href="{% url 'login' %}">Log in</a>  to post comments. 
+                Don't have an account? <a href="{% url 'register' %}">Register here.</a>
+            </h6>     
+        {% endif %}
+
+        <!-- Comment body -->
+        {% for comment in comments %}
+            <div class="row my-3">
+                <div class="col-auto">
+                    <img class="avatar my-1" src="{% static 'auctions/images/darth_placeholder.png' %}" alt="avatar"
+                    height="80px" width="80px">
+                </div>
+                <div class="col">
+                    <p class="mb-1">
+                        <strong>{{ comment.author.username }}</strong>
+                        <span class="text-muted fw-lighter"> at {{ comment.pub_time|date:"M j, Y, P" }}</span>
+                    </p>
+                    <p>{{ comment.text }}</p>
+                </div>
+            </div>
+        {% endfor %}
+        
+    </div>
+{% endblock %}

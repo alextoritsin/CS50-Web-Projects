@@ -1,0 +1,18 @@
+{% extends "encyclopedia/layout.html" %}
+
+{% block title %}
+    Edit Entry
+{% endblock %}
+
+{% block body %}
+    <h3 id="edit">Edit <span style="color: blue;">{{ title }}</span> Page</h3>
+    <form action="{% url 'edit_entry' title %}" method="post">
+        {% csrf_token %}
+        <div class="markdown">
+            {{ edit_form.content }}
+        </div>
+        <div class="d-flex justify-content-end">
+            <button type="submit" class="btn btn-outline-warning">Save Changes</button>
+        </div>
+    </form>
+{% endblock %}

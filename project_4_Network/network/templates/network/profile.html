@@ -1,0 +1,30 @@
+{% extends "network/layout.html" %}
+
+{% load static %}
+
+{% block body %}
+    <!-- Profile info -->
+    <div class="container mt-3 mb-2 border">
+        <img class="avatar mt-1" src="{% static 'network/avatar.png' %}" alt="profile_photo" height="120px" width="120px">
+        {% if user.is_authenticated and user != profile %}
+            {% if profile in user.following.all %}
+                <button class="btn btn-outline-danger btn-sm follow" id="{{ profile.id }}">Unfollow</button>
+            {% else %}
+                <button class="btn btn-outline-primary btn-sm follow" id="{{ profile.id }}">Follow</button>
+            {% endif %}
+        {% endif %}
+        <div class="name my-1"><b>{{ profile.username }}</b></div>
+        <div><i class="bi bi-calendar-check me-2"></i><span>Joined {{ profile.joined|date:"F Y" }}</span></div>
+        <div class="my-1">
+            <span class="me-3"><b class="subs">{{ profile.followers.all|length }}</b> Followers</span>
+            <span><b>{{ profile.following.all|length }}</b> Following</span>
+        </div>
+    </div>
+    
+    {% include "network/posts.html" %}
+    
+{% endblock %}
+
+{% block script %}
+    <script src="{% static 'network/network.js' %}"></script>
+{% endblock %}

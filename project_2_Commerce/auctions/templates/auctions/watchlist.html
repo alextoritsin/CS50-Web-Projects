@@ -1,0 +1,27 @@
+{% extends "auctions/layout.html" %}
+
+{% block body %}
+    <h2>Watchlist</h2>
+    {% if items %}
+        <div class="container-fluid">
+            {% for item in items %}
+                <div id="lst" class="row my-4 py-2 mx-1">
+                    <div class="col-4 ">
+                        <img src="{{ item.url }}" alt="listing" height="auto" width="200px">
+                    </div>
+                    <div class="col-8">
+                        <a href="{% url 'listing' item.id %}">
+                            <h4>{{ item.title }}</h4>
+                        </a>
+                        <h6>Price: ${{ item.starting_bid }}</h6>
+                        <p>{{ item.description }}</p>
+                        <p class="text-muted">Created {{ item.pub_time|date:"M j, Y, P" }}</p>
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+    {% else %}
+        <p class="fs-4">You don't have any listings in watchlist. Go to <a href="{% url 'index' %}">active</a> listings to add one.</p>
+    {% endif %}
+    
+{% endblock %}

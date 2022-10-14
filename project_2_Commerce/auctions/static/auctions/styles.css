@@ -1,0 +1,108 @@
+body {
+    padding: 10px;
+}
+
+form.listing {
+    margin-left: 1rem;
+    width: 60%;
+}
+
+div.param {
+    width: 70%;
+}
+
+ul.errorlist {
+    width: max-content;
+    font-size: small;
+    color: red;
+    list-style-type: none;
+    padding: 0;
+    padding-left: 5px;
+    margin: 0;
+}
+
+div.bid {
+    width: 15%;
+}
+
+div#lst {
+    border: 1px solid rgba(0, 0, 0, 0.041);
+    border-radius: 4px;
+}
+
+div#lst:hover {
+    box-shadow: 1px 1px 3px 2px rgba(0, 0, 0, 0.137);
+    background-color: rgb(245, 244, 244);
+}
+
+a, a:hover {
+    text-decoration: none;
+}
+
+i {
+    font-size: 2rem;
+}
+
+form#icon {
+    display: inline;
+}
+
+div.desc {
+    width: 90%;
+    font-size: x-large;
+}
+
+button.close {
+    border-radius: 15px;
+}
+
+.commentblock {
+    width: 60%;
+    box-shadow: 1px 1px 5px 1px rgba(0, 0, 0, 0.082),
+                -1px -1px 5px 1px rgba(0, 0, 0, 0.082);  
+}
+
+img.avatar {
+    border-radius: 5px;
+    border: 1px solid rgba(0, 0, 0, 0.137);
+}
+
+.comment-input {
+    width: 100%;
+    height: 120px;
+}
+
+.border {
+    border: 1px solid rgba(0, 0, 0, 0.658);
+}
+
+.header {
+    background-color: rgba(148, 189, 236, 0.808);
+    color:rgb(34, 49, 49);
+    height: 40px;
+    font-size: large;
+    
+}
+
+div.category {
+    display: inline;
+    border: 1px solid rgba(0, 0, 0, 0.342);
+    font-size: x-large;
+    padding: 0px 10px 3px 10px;
+    border-radius: 16px;
+    background-color: rgba(148, 190, 253, 0.493);
+
+}
+
+div.category:hover {
+    background-color: rgba(125, 177, 255, 0.493);
+}
+
+h2 {
+    margin-left: 1rem;
+}
+
+img.listing {
+    max-width: 500px;
+    max-height: auto;
+}

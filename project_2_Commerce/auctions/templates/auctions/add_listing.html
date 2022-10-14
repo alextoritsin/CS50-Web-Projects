@@ -1,0 +1,31 @@
+{% extends "auctions/layout.html" %}
+
+{% block body %}
+<form class="listing" action="{% url 'add_listing' %}" method="post">
+    {% csrf_token %}
+    <div class="form-group param">
+        {{ form.title.label }}:<br>
+        {{ form.title }}
+    </div>
+    <div class="form-group param">
+        {{ form.category.label }}:<br>
+        {{ form.category }}
+    </div>
+    <div class="form-group bid">
+        {{ form.starting_bid.label }}:<br>
+        {{ form.starting_bid }}
+        {{ form.starting_bid.errors }}
+    </div>
+    <div class="form-group param">
+        {{ form.url.label }}:<br>
+        {{ form.url }}
+    </div>
+    <div class="form-group mb-3">
+        {{ form.description.label }}:<br>
+        {{ form.description }}
+    </div>
+
+    <button type="submit" class="btn btn-primary">Create Listing</button>
+</form>
+
+{% endblock %}

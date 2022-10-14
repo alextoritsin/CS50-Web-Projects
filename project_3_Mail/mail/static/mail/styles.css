@@ -1,0 +1,46 @@
+textarea {
+    min-height: 400px;
+}
+
+.btn, .form-control {
+    margin-bottom: 1rem;
+}
+
+#error {
+    color: red;
+}
+
+div.row {
+    border: 1px solid #00000015;
+    border-radius: 2px;
+    padding: 3px 0px 3px 0px;
+    background-color: #dbdbdb6e;
+}
+
+div.row:hover {
+    box-shadow: 1px 1px 2px 1px rgba(0, 0, 0, 0.089),
+                -1px -2px 5px 1px rgba(0, 0, 0, 0.089);
+    cursor: pointer;
+}
+
+div.col-4[data-email="3"] {
+    font-size: small;
+    color: rgba(0, 0, 0, 0.459);
+    justify-content: end;
+}
+
+div.col-4 {
+    display: flex;
+    vertical-align: middle;
+    align-items: center;
+}
+
+
+.reply, .archive {
+    margin-bottom: 0px;
+    margin-top: 10px;
+}
+
+div.content {
+    white-space: pre;
+}

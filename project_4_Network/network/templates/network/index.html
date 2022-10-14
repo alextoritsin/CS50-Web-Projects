@@ -1,0 +1,47 @@
+{% extends "network/layout.html" %}
+
+{% load static %}
+
+{% block body %}
+    
+    <!--  Create post -->
+    <div class="container postsblock">
+        
+        
+        <!-- Post input -->
+        {% if user.is_authenticated %}
+            <div class="row mt-2">
+                <div class="col-auto">
+                    <img class="avatar my-1" src="{% static 'network/avatar.png' %}" alt="avatar"
+                    height="80px" width="80px"> 
+                </div>
+                <div class="col">
+                    <form action="{% url 'index' %}" method="post" class="ms-2">
+                        {% csrf_token %}
+                        <textarea rows="3" name="post" class="comment-input form-control mb-2 mt-1" placeholder="What's happening?" required></textarea>
+                        <div class="d-flex justify-content-end">
+                            <button class="btn btn-outline-primary btn-sm mb-2" type="submit">Post</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+            
+        {% else %}
+            <div class="pb-3 notlogged">
+                Please, <a href="{% url 'login' %}">Log in</a>  to post. 
+                Don't have an account? <a href="{% url 'register' %}">Register here.</a>
+            </div>     
+        {% endif %}
+    </div>
+
+    {% include "network/posts.html" %}
+    
+    {% if not page_obj %}
+        No Posts Yet
+    {% endif %}
+
+{% endblock %}
+
+{% block script %}
+    <script src="{% static 'network/network.js' %}"></script>
+{% endblock %}
